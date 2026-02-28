@@ -180,8 +180,30 @@ The payoff step. Shows exactly what the child will see tonight.
   - 🟡 "Yellow — almost time"
   - 🟢 "Green — you can get up!"
 - Optional: "Enable bedtime reminder" toggle — shows only if notification permissions not yet granted; subtext: "We'll remind you to open Dawny at [sleep time]" — tapping requests `expo-notifications` permission
-- CTA: "Start Dawny" (full-width, `#4A90D9`, large 56pt height) → saves all settings, marks `onboardingComplete = true`, navigates to Clock Screen with a full-screen cross-fade transition (not a slide — it should feel like the app waking up)
+- CTA: "Continue" (full-width, `#4A90D9`, 56pt height) → advances to Step 9
 - Below CTA: small text "Free to use · Upgrade anytime"
+
+**Step 9 — Trial offer**
+
+Shown immediately after the live preview, before the user ever touches the clock screen. This is the highest-converting paywall placement — excitement is at its peak and the parent has just seen exactly what the product does.
+
+Layout:
+- Background: warm off-white `#F7F4EF`, same as all onboarding steps. No progress bar on this step — it's a standalone offer, not a configuration step.
+- Top: all 5 characters in Wake expression rendered as a horizontal row of SVG illustrations (~56pt each), centered, with a subtle gentle bounce animation (scale 1.0 → 1.04 → 1.0, staggered 100ms between each character)
+- Headline: "Try Premium free for 7 days" — 26pt bold, centered, `#1A1A1A`
+- Subtext: "Unlock everything. Cancel anytime." — 16pt, `#6B6B6B`, centered
+- Feature list — 4 rows, each with a colored icon dot on the left and label on the right, fade+slide-up staggered (0ms, 80ms, 160ms, 240ms):
+  - 🟡 dot `#F5C842` — "Weekend schedules & gradual sunrise wake"
+  - ⭐ dot `#4A90D9` — "Reward sticker chart with streak bonuses"
+  - 🎵 dot `#7BC47B` — "Ambient sounds & bedtime reminders"
+  - 🦁 dot `#C4956A` — "All 5 characters + morning routine timer"
+- Two subscription option cards (radio-style, same design as main Paywall Sheet):
+  - Monthly — "$3.99 / month" — "Cancel anytime"
+  - Yearly — "$29.99 / year" — "Save 37%" — gold "Best Value" badge — pre-selected
+- Primary CTA: "Start Free Trial" (full-width, `#4A90D9`, 56pt height, bold) → sets `isPremium = true`, `premiumSource = 'trial'`, marks `onboardingComplete = true`, navigates to Clock Screen with full-screen cross-fade transition. Shows success toast "Premium unlocked! Enjoy your 7-day free trial. ⭐" after transition.
+- Secondary CTA: "Start with free plan" — small text link below the primary button, `#6B6B6B`, 14pt — tapping marks `onboardingComplete = true` and navigates to Clock Screen with the same cross-fade transition, no toast. This is intentionally understated — visible and accessible, but not competing with the primary CTA.
+- Fine print below both CTAs: "7-day free trial, then [selected price]. Cancel anytime in App Store settings. No charge today." — 11pt, `#AAAAAA`, centered
+- No X close button on this step — user must choose one of the two CTAs. Both lead to the app; this is a soft paywall, not a hard block.
 
 ---
 
@@ -617,7 +639,7 @@ When `bedtimeReminderEnabled === true` on a profile and `isPremium === true`:
 
 ```
 Stack Navigator (no header)
-├── /onboarding   (horizontal pager, progress bar, back chevron from step 2)
+├── /onboarding   (horizontal pager, progress bar steps 2–8, no progress bar on steps 1 and 9)
 │   ├── Step1Hook
 │   ├── Step2HowItWorks
 │   ├── Step3ChildName
@@ -625,7 +647,8 @@ Stack Navigator (no header)
 │   ├── Step5Bedtime
 │   ├── Step6WakeTime
 │   ├── Step7PIN
-│   └── Step8Preview
+│   ├── Step8Preview
+│   └── Step9TrialOffer
 ├── /clock
 │   ├── ParentQuickMenu     (modal overlay, PIN-gated)
 │   │   └── ProfileSwitcher (bottom sheet)
@@ -712,7 +735,7 @@ Draw all 5 characters using `react-native-svg`. Each is a self-contained SVG com
 ## Deliverable
 
 A fully working Expo React Native app that:
-1. Completes all 8 onboarding steps with progress bar, back navigation, and all live interactions (sleep window calculator, PIN confirm, live preview card)
+1. Completes all 9 onboarding steps with progress bar, back navigation, live preview card, and trial offer paywall as the final step before entering the app
 2. Persists all state across restarts; shows clock screen directly if `onboardingComplete === true`
 3. Shows the clock screen with correct stage based on current real time
 3. Smoothly cross-fades between stage colors on transition
