@@ -1,4 +1,4 @@
-# PRD: Glow — Kids OK-to-Wake Alarm
+# PRD: Dawny — Kids OK-to-Wake Alarm
 
 **Version:** 1.0
 **Date:** 2026-02-28
@@ -8,7 +8,7 @@
 
 ## 1. Executive Summary
 
-Glow is a pure-software iOS app that teaches toddlers and young children when it is OK to get out of bed. A large, color-changing screen acts as a visual clock: red means "stay in bed," yellow means "almost time," and green means "you can get up!" — no $200 hardware required. Parents set sleep and wake windows from their phone; kids see a simple, friendly glowing screen with an optional character. The app targets parents of children ages 1–8 who know about OK-to-wake clocks (Hatch, LittleHippo, Mirari) but don't want to buy or have already broken a hardware device. Target revenue: $5K–$10K/mo within 12 months at $3.99/mo or $29.99/yr.
+Dawny is a pure-software iOS app that teaches toddlers and young children when it is OK to get out of bed. A large, color-changing screen acts as a visual clock: red means "stay in bed," yellow means "almost time," and green means "you can get up!" — no $200 hardware required. Parents set sleep and wake windows from their phone; kids see a simple, friendly glowing screen with an optional character. The app targets parents of children ages 1–8 who know about OK-to-wake clocks (Hatch, LittleHippo, Mirari) but don't want to buy or have already broken a hardware device. Target revenue: $5K–$10K/mo within 12 months at $3.99/mo or $29.99/yr.
 
 ---
 
@@ -157,7 +157,7 @@ App
 │   ├── Choose character
 │   ├── Set sleep time + wake time
 │   ├── Set PIN (parent lock)
-│   └── "Start Glow" → Child Clock Screen
+│   └── "Start Dawny" → Child Clock Screen
 │
 ├── Child Clock Screen (full-screen, primary runtime view)
 │   ├── Full-color background (stage-dependent)
@@ -386,7 +386,7 @@ Soft, friendly, reassuring — designed to be calming for a sleepy child and tru
 - **Pinterest:** "Toddler sleep tips" boards consistently drive app downloads in the parenting niche — create 5 pins linking to App Store
 - **Facebook Groups:** Parenting groups (e.g., "Toddler sleep help") are highly active — share as a recommendation, not an ad
 - **Apple Search Ads:** "ok to wake clock," "toddler alarm," "kids alarm clock," "hatch alternative" — very low CPM, high intent
-- **App Store optimization:** Title: "Glow: OK to Wake Kids Clock" — hits all primary keywords
+- **App Store optimization:** Title: "Dawny: OK to Wake Kids Clock" — hits all primary keywords
 
 ### Seasonal Spikes to Exploit
 - **January:** New Year parenting resolutions
@@ -430,7 +430,7 @@ Soft, friendly, reassuring — designed to be calming for a sleepy child and tru
 - **App Store Age Rating:** 4+ (no objectionable content; designed for children but controlled by adults).
 - **"Designed for Children" guidelines:** App does not serve targeted advertising, does not use persistent identifiers for children, and does not collect personal information from children — compliant with Apple's Children's App guidelines.
 - **Subscription:** Handled entirely by StoreKit 2 / Apple. No payment data touches the developer's infrastructure.
-- **Screen time concerns:** Glow displays a static color/character — not interactive content. Usage is passive (child watches the screen, not interacts with it). This is consistent with sleep-aid device use, not screen time concerns.
+- **Screen time concerns:** Dawny displays a static color/character — not interactive content. Usage is passive (child watches the screen, not interacts with it). This is consistent with sleep-aid device use, not screen time concerns.
 
 ---
 
@@ -439,7 +439,7 @@ Soft, friendly, reassuring — designed to be calming for a sleepy child and tru
 ### V2 (Months 4–6 post-launch)
 - **iPad layout optimization:** Side-by-side parent controls + clock preview on iPad
 - **Reward sticker system:** Child earns a digital sticker for every morning they waited for green — shown on a sticker chart in the app (parent-controlled)
-- **Siri Shortcut:** "Hey Siri, start Glow for Olivia"
+- **Siri Shortcut:** "Hey Siri, start Dawny for Olivia"
 
 ### V3 (Months 7–12 post-launch)
 - **Android release** (React Native makes this straightforward after iOS validation)
