@@ -86,11 +86,11 @@ The app's primary screen fills the entire display with a color and a friendly ch
   - **Sleep time** (when screen goes blue) — e.g., 7:30 PM
   - **Almost-Time window** — how many minutes before wake-up to show amber (5 / 10 / 15 / 30 min)
   - **Wake time** (when screen goes green) — e.g., 7:00 AM
-  - **Day-of-week schedule** (different times for weekdays vs. weekends)
+  - **Day-of-week schedule** (different times for weekdays vs. weekends) — **Premium**
 - Screen stays on (uses `UIApplication.shared.isIdleTimerDisabled = true`) while the schedule is active
 - Gentle brightness: screen dims to 5% in Sleep stage, increases to 40% in Almost-Time, 80% in Wake Up
-- **Free tier:** 1 schedule (same time every day), 3 color stages, 1 character
-- **Premium:** multiple schedules, per-day customization, all characters, custom stage colors
+- **Free tier:** 1 schedule (same time every day), 3 color stages, 1 character (Sunny)
+- **Premium:** weekend/per-day schedules, gradual sunrise wake, all characters, custom stage colors
 
 ### Feature 2: Characters
 A character is displayed on the clock screen — friendly, non-scary, culturally diverse. The character changes expression per stage:
@@ -143,6 +143,42 @@ A character is displayed on the clock screen — friendly, non-scary, culturally
 ### Feature 7: Naptime Mode
 - A separate schedule type: "Nap" (shorter duration, daytime use)
 - Same color-stage logic but scoped to a 1–3 hour nap window
+- **Premium only**
+
+### Feature 8: Gradual Sunrise Wake (Premium)
+- Instead of a hard color switch at wake time, the background slowly brightens over a configurable window (5 / 10 / 20 min) before the full green
+- During the gradual window: screen interpolates from deep navy through warm amber tones to full green
+- Mimics a sunrise alarm — helps children wake naturally rather than from an abrupt change
+- Character transitions from Sleep expression to Wake expression gradually as brightness increases
+- **Premium only**
+
+### Feature 9: Reward Sticker Chart (Premium)
+- Each morning the child waits until the green light before getting up, the parent taps a "Great job!" button in the Parent Quick Menu — this logs the morning as a success
+- Child profile accumulates stickers (one per successful morning)
+- A sticker chart screen shows the current week and a running total
+- Sticker designs rotate: stars, suns, hearts, rockets — new designs unlock as streaks grow (3-day, 7-day, 14-day)
+- Parents can show this screen to the child as positive reinforcement
+- **Premium only**
+
+### Feature 10: Bedtime Reminder (Premium)
+- A push notification to the parent's phone at the scheduled sleep time: "Time to start Dawny for [child name] 🌙"
+- Reminds parents to place and open the device before the child goes to bed
+- Toggle per child profile — on by default for Premium users
+- **Premium only**
+
+### Feature 11: Morning Routine Timer (Premium)
+- After the wake stage begins, the clock screen can optionally display a countdown timer
+- Parent sets the routine duration (e.g., 20 minutes to get dressed, eat breakfast)
+- Screen shows the character + a simple progress arc draining around them
+- When timer reaches zero: a gentle chime plays and the character waves
+- Designed for school-age children (ages 5–8) who need to stay on schedule
+- **Premium only**
+
+### Feature 12: Sleep History Log (Premium)
+- A simple weekly chart in the parent's settings showing what time the green stage triggered each day
+- Also logs "Great job!" taps from the sticker chart to show compliance rate
+- Helps parents track sleep regressions, DST adjustments, and schedule effectiveness
+- Data stored locally (MMKV), never transmitted
 - **Premium only**
 
 ---
@@ -226,7 +262,7 @@ App
 
 ### Free Tier
 - 1 child profile
-- 1 bedtime schedule (same time every day)
+- 1 bedtime schedule (same time every day — no weekend variation)
 - 3 color stages (Sleep / Almost / Wake)
 - 1 character (Sunny)
 - Transition chimes
@@ -234,18 +270,24 @@ App
 - Parent PIN lock
 
 ### Premium — $3.99/mo or $29.99/yr
-- Unlimited child profiles
-- Per-day schedule customization (different weekend times)
-- Naptime mode
-- All 5 characters + quarterly new additions
-- Custom stage colors (color picker)
-- Full ambient sound library (8 sounds)
+- **Weekend & per-day schedules** — different wake time on Saturday/Sunday
+- **Gradual sunrise wake** — slow color transition in the minutes before green
+- **Reward sticker chart** — track successful mornings, unlock sticker designs on streaks
+- **All 5 characters** + quarterly new additions
+- **Bedtime reminder** — push notification to parent's phone at sleep time
+- **Morning routine timer** — post-wake countdown for school-age kids
+- **Sleep history log** — weekly chart of wake times and compliance
+- **Naptime mode** — scheduled and manual naps
+- **Ambient sound library** (8 sounds — rainfall, ocean, lullaby, white noise, and more)
+- **Custom stage colors** — color picker to match the nursery
+- **Multiple child profiles** — unlimited profiles for larger families
 - Screen brightness control per stage
 
 ### Trial Strategy
 - 7-day free Premium trial on first launch (no credit card, via StoreKit)
-- Paywall triggers on: adding a 2nd profile, accessing naptime, changing weekend times
+- Paywall triggers on: setting a weekend wake time, accessing sticker chart, selecting a non-Sunny character, accessing naptime, adding ambient sound
 - Soft paywall with "Start Free Trial" + "Maybe Later" — no hard block
+- Trigger copy is contextual: e.g. when tapping Luna — "Luna is a Premium character. Try Premium free for 7 days."
 
 ### Revenue Projections
 | Month | Subscribers | MRR |
