@@ -43,34 +43,145 @@ Free tier delivers a complete, working experience for one child on a fixed daily
 
 ## Screens to build
 
-### 1. Onboarding (3 steps, shown only on first launch)
+### 1. Onboarding (8 steps, shown only on first launch)
 
-**Step 1 — Welcome**
-- Full-screen, warm off-white background `#F7F4EF`
-- Large centered text: "Meet Dawny" in SF Pro Rounded, 32pt bold
-- Subtext: "The color-changing clock that teaches your toddler when it's OK to get up."
-- Three small icon+label rows: 🔵 Sleep → 🟡 Almost time → 🟢 Time to wake!
-- CTA button: "Get Started" (full-width, rounded, accent blue `#4A90D9`)
+Onboarding uses a horizontal pager (no swipe — CTA buttons advance only). A thin progress bar at the top fills across all 8 steps. A "Back" chevron appears from step 2 onward. Background is warm off-white `#F7F4EF` throughout. All steps slide in from the right.
 
-**Step 2 — Set up your child**
-- Text input: "Child's name" (placeholder: "e.g. Olivia")
-- Two time pickers (wheel-style):
-  - "Bedtime" — default 7:30 PM
-  - "Wake time" — default 7:00 AM
-- Segmented control: "Almost-time warning" — 5 min / 10 min / 15 min / 30 min (default 15 min)
+---
+
+**Step 1 — Hook**
+
+Full-screen hero layout. No progress bar on this step — it fades in after tapping the CTA.
+
+- Top half: animated illustration — a phone on a nightstand, screen glowing deep navy `#1A2744`, then cross-fading to amber, then to green, then back to navy. Loops continuously. Rendered as three rounded rect SVG shapes (phone outline + screen) cross-fading their fill color. No external assets needed.
+- Headline: "No more 5 AM wake-ups." — 30pt bold, centered, `#1A1A1A`
+- Subtext: "Dawny teaches your toddler to wait for the green light — so everyone sleeps in." — 16pt regular, `#6B6B6B`, centered, max-width 300pt
+- CTA: "How does it work?" (full-width, rounded, `#4A90D9`)
+- Very small text link below button: "Skip setup" — jumps directly to Step 8 (clock screen with defaults)
+
+---
+
+**Step 2 — How it works (education)**
+
+This step has no inputs. Its only job is to make the parent confident before they configure anything.
+
+- Title: "Three colors. One rule." — 24pt bold
+- Three large stage cards stacked vertically, each ~80pt tall, rounded corners, soft shadow:
+
+  **Card 1 — Sleep**
+  - Left: filled circle, color `#1A2744` (navy), diameter 36pt
+  - Right: bold label "Stay in bed" + subtext "Screen glows blue all night"
+
+  **Card 2 — Almost Time**
+  - Left: filled circle, color `#F4A227` (amber), diameter 36pt
+  - Right: bold label "Getting close…" + subtext "Waking up soon — stay quiet"
+
+  **Card 3 — Wake Up!**
+  - Left: filled circle, color `#4ADE80` (green), diameter 36pt
+  - Right: bold label "You can get up!" + subtext "Green means GO"
+
+- Cards animate in one at a time with a staggered fade+slide-up (0ms, 150ms, 300ms delays)
+- Below cards: small italic note — "Your child sees the color. That's it. No buttons, no confusion."
+- CTA: "Got it — let's set it up"
+
+---
+
+**Step 3 — Child's name**
+
+Single-focus step. One field, no distraction.
+
+- Title: "What's your child's name?" — 24pt bold
+- Large text input, centered, 22pt, placeholder: "Olivia" — auto-focuses and opens keyboard on mount
+- Below input: small label "You can add more children later" — `#6B6B6B`, 13pt
+- CTA: "Next" — disabled (gray) until at least 1 character is typed; enabled (blue) once name is entered
+- Keyboard: `.namePhonePad` return key "Next" advances to Step 4
+
+---
+
+**Step 4 — Choose a character**
+
+- Title: "Pick [child name]'s character" (uses name from Step 3) — 24pt bold
+- Subtext: "They'll see this on screen every night" — 14pt, `#6B6B6B`
+- 2×3 grid of character cards (last cell empty), each ~140pt square, rounded corners 16pt, soft shadow:
+  1. **Sunny** — SVG sun character in Wake expression (smiling) — "FREE" green pill badge bottom-right
+  2. **Luna** — SVG moon character in Wake expression — gold lock icon top-right corner
+  3. **Pip** — SVG bird character in Wake expression — gold lock icon
+  4. **Dino** — SVG dinosaur character in Wake expression — gold lock icon
+  5. **Bear** — SVG bear character in Wake expression — gold lock icon
+- Selected card: blue border ring 3pt, slight scale-up (1.03) spring animation
+- Default selected: Sunny
+- Tapping a locked character: card shakes (horizontal spring wiggle), shows a small tooltip bubble above it: "Premium character — unlock with free trial" with a "Learn more" link that opens Paywall Sheet as a sheet (not replacing onboarding)
 - CTA: "Next"
 
-**Step 3 — Choose a character**
-- Title: "Pick your character"
-- Horizontal scroll row of 5 character cards (each ~120x120pt, rounded corners, soft shadow):
-  1. **Sunny** — a smiling sun with round rays (yellow/orange) — FREE
-  2. **Luna** — a crescent moon with small stars (soft purple/navy) — lock icon overlay
-  3. **Pip** — a round cartoon bird (teal/orange beak) — lock icon overlay
-  4. **Dino** — a gentle round dinosaur (sage green) — lock icon overlay
-  5. **Bear** — a classic round teddy bear (warm brown) — lock icon overlay
-- Tapping a locked character opens the Paywall Sheet
-- Default selection: Sunny
-- CTA: "Start Dawny" → goes to Clock Screen
+---
+
+**Step 5 — Bedtime**
+
+- Title: "When does [child name] go to bed?" — 24pt bold
+- Large iOS wheel time picker, centered — default 7:30 PM
+- Below picker: small contextual label that updates live as the wheel turns:
+  - Before 6 PM: "That's quite early — make sure the room is dark!"
+  - 6–8 PM: "Perfect bedtime for toddlers 👍"
+  - After 9 PM: "A little late — adjust if needed"
+  - Label color: `#6B6B6B`, 13pt italic
+- CTA: "Next"
+
+---
+
+**Step 6 — Wake time**
+
+- Title: "When should [child name] wake up?" — 24pt bold
+- Large iOS wheel time picker, centered — default 7:00 AM
+- Below picker: live label showing the sleep window duration:
+  - e.g., if bedtime = 7:30 PM and wake = 7:00 AM → "That's 11h 30m of sleep — great for a toddler!"
+  - Calculates automatically as wheel turns
+  - If wake time is before bedtime by less than 6 hours → shows amber warning: "That's only [X]h — is that right?"
+  - Label color: `#6B6B6B` normally; `#E8A820` for warnings; 13pt italic
+- "Almost-time warning" — small collapsible section below the live label, collapsed by default:
+  - Tappable row: "Almost-time warning · 15 min ›"
+  - Expands to show segmented control: 5 min / 10 min / 15 min / 30 min
+  - Helper text: "Screen turns amber [X] minutes before wake time as a heads-up"
+- CTA: "Next"
+
+---
+
+**Step 7 — Set a parent PIN**
+
+- Title: "Set a parent PIN" — 24pt bold
+- Subtext: "Stops little hands from changing the settings. To open the parent menu, triple-tap the top-right corner of the clock screen." — 15pt, `#6B6B6B`
+- Four large PIN digit circles (60pt diameter each), spaced horizontally, centered — fill in as digits are tapped
+- Number pad below (standard 3×4 grid, large tap targets, 72pt rows):
+  - Digits 1–9, then 0 center-bottom, backspace bottom-right (← icon)
+  - Digits: 22pt, `#1A1A1A`, circular tap highlight on press
+- Entry has two phases:
+  - Phase 1: "Enter a 4-digit PIN" — fills 4 circles
+  - Phase 2 (auto-advances after 4th digit): circles clear, label changes to "Confirm your PIN" — fills again
+  - If confirm matches: green checkmark animates into each circle in sequence, then auto-advances to Step 8 after 600ms
+  - If confirm doesn't match: circles shake horizontally (spring wiggle), clear, return to Phase 1 with label "PINs didn't match — try again"
+- Small text link below pad: "Skip for now — I'll set this later" (sets PIN to null / no lock, skippable)
+
+---
+
+**Step 8 — Live preview**
+
+The payoff step. Shows exactly what the child will see tonight.
+
+- Title: "Here's what [child name] will see" — 24pt bold, centered
+- Below title: a large rounded-rect "phone mockup" preview card (~280pt wide, ~420pt tall, corner radius 32pt, soft shadow). Inside it, a live mini clock face:
+  - Fills the card interior completely (no bezel gap)
+  - Shows the selected character centered
+  - Background color cycles automatically: Sleep (3s) → Almost (2s) → Wake (3s) → repeat
+  - Character expression updates with each stage
+  - "zZz" floats up during Sleep, bounces during Wake
+  - Color cross-fades between stages (same 1.5s animation as the real clock screen)
+  - This is the real Clock Screen component, rendered inside a `View` with `transform: [{ scale: 0.55 }]` and `overflow: hidden`
+- Below the preview card: three small colored dot + label rows (static):
+  - 🔵 "Blue — stay in bed"
+  - 🟡 "Yellow — almost time"
+  - 🟢 "Green — you can get up!"
+- Optional: "Enable bedtime reminder" toggle — shows only if notification permissions not yet granted; subtext: "We'll remind you to open Dawny at [sleep time]" — tapping requests `expo-notifications` permission
+- CTA: "Start Dawny" (full-width, `#4A90D9`, large 56pt height) → saves all settings, marks `onboardingComplete = true`, navigates to Clock Screen with a full-screen cross-fade transition (not a slide — it should feel like the app waking up)
+- Below CTA: small text "Free to use · Upgrade anytime"
 
 ---
 
@@ -506,10 +617,15 @@ When `bedtimeReminderEnabled === true` on a profile and `isPremium === true`:
 
 ```
 Stack Navigator (no header)
-├── /onboarding
-│   ├── Step1Welcome
-│   ├── Step2Schedule
-│   └── Step3Character
+├── /onboarding   (horizontal pager, progress bar, back chevron from step 2)
+│   ├── Step1Hook
+│   ├── Step2HowItWorks
+│   ├── Step3ChildName
+│   ├── Step4Character
+│   ├── Step5Bedtime
+│   ├── Step6WakeTime
+│   ├── Step7PIN
+│   └── Step8Preview
 ├── /clock
 │   ├── ParentQuickMenu     (modal overlay, PIN-gated)
 │   │   └── ProfileSwitcher (bottom sheet)
@@ -596,8 +712,9 @@ Draw all 5 characters using `react-native-svg`. Each is a self-contained SVG com
 ## Deliverable
 
 A fully working Expo React Native app that:
-1. Completes onboarding and persists all state across restarts
-2. Shows the clock screen with correct stage based on current real time
+1. Completes all 8 onboarding steps with progress bar, back navigation, and all live interactions (sleep window calculator, PIN confirm, live preview card)
+2. Persists all state across restarts; shows clock screen directly if `onboardingComplete === true`
+3. Shows the clock screen with correct stage based on current real time
 3. Smoothly cross-fades between stage colors on transition
 4. Gradual sunrise wake: continuously interpolates color during Almost stage when enabled
 5. Animates the selected character with stage-appropriate expressions and spring effects
